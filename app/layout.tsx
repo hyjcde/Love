@@ -23,12 +23,42 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
+  );
+}
+
+// Simple theme provider toggling html.dark class and persisting to localStorage
+function ThemeProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+          (function(){
+            try {
+              var key = 'love-theme';
+              var saved = localStorage.getItem(key);
+              var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              var theme = saved || (prefersDark ? 'dark' : 'light');
+              if (theme === 'dark') document.documentElement.classList.add('dark');
+              else document.documentElement.classList.remove('dark');
+              window.__setTheme = function(t){
+                if (t==='dark') document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+                localStorage.setItem(key, t);
+              };
+            } catch(e) {}
+          })();
+        `,
+        }}
+      />
+      {children}
+    </>
   );
 }

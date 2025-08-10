@@ -1,17 +1,20 @@
 @import "tailwindcss";
 
+/* Color variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent: #f9a8d4; /* pink-300 */
+  --accent-600: #db2777; /* pink-600 */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark mode override via class (in addition to prefers-color-scheme) */
+html.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
+/* Respect system scheme as a fallback */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,8 +22,24 @@
   }
 }
 
+/* Tailwind theme glue */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Soft hero background */
+.love-hero {
+  background-image:
+    radial-gradient(1000px 500px at 10% 0%, rgba(249, 168, 212, 0.25), transparent),
+    radial-gradient(800px 400px at 90% 10%, rgba(244, 114, 182, 0.15), transparent),
+    linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(255,255,255,0.4));
 }
