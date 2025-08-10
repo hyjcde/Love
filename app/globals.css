@@ -2,16 +2,22 @@
 
 /* Color variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --accent: #f9a8d4; /* pink-300 */
-  --accent-600: #db2777; /* pink-600 */
+  --background: #fcfcfe;
+  --foreground: #1a1a1a;
+  /* 柔和淡粉主色 */
+  --accent: #f8b4d9; /* pastel pink */
+  --accent-500: #f472b6;
+  --accent-600: #db2777;
+  --card: rgba(255, 255, 255, 0.65);
+  --card-border: rgba(10, 10, 10, 0.08);
 }
 
 /* Dark mode override via class (in addition to prefers-color-scheme) */
 html.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #0b0b10;
+  --foreground: #f1f1f1;
+  --card: rgba(0, 0, 0, 0.35);
+  --card-border: rgba(255, 255, 255, 0.12);
 }
 
 /* Respect system scheme as a fallback */
@@ -39,7 +45,39 @@ body {
 /* Soft hero background */
 .love-hero {
   background-image:
-    radial-gradient(1000px 500px at 10% 0%, rgba(249, 168, 212, 0.25), transparent),
-    radial-gradient(800px 400px at 90% 10%, rgba(244, 114, 182, 0.15), transparent),
-    linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(255,255,255,0.4));
+    radial-gradient(1000px 500px at 10% 0%, rgba(248, 180, 217, 0.30), transparent),
+    radial-gradient(800px 400px at 90% 10%, rgba(244, 114, 182, 0.18), transparent),
+    linear-gradient(to bottom right, rgba(255,255,255,0.75), rgba(255,255,255,0.55));
 }
+
+/* 背景大气泡层 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20% -10% auto -10%;
+  height: 60vh;
+  background:
+    radial-gradient(1200px 600px at -10% -20%, rgba(248, 180, 217, 0.22), transparent),
+    radial-gradient(900px 500px at 110% -10%, rgba(244, 114, 182, 0.15), transparent);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 通用磨砂卡片 */
+.glass-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+}
+
+/* 常用按钮风格 */
+.btn-accent {
+  background: var(--accent);
+  color: white;
+}
+.btn-accent:hover { background: var(--accent-500); }
+
+/* 导航胶囊 */
+.nav-pill { border: 1px solid var(--card-border); }
+.nav-pill:hover { background: rgba(0,0,0,0.04); }
+html.dark .nav-pill:hover { background: rgba(255,255,255,0.08); }

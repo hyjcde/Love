@@ -68,7 +68,7 @@ export default function MilestonesPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-2xl font-bold">里程碑</h1>
-      <div className="mt-6 rounded-2xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg黑/20">
+      <div className="mt-6 rounded-2xl glass-card p-4">
         <div className="grid gap-3 sm:grid-cols-[1fr_180px] items-end">
           <div>
             <label className="block text-sm mb-1">事件</label>

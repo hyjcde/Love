@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ExportJSON, ImportJSON, EditDialog } from "./components";
+import { EditDialog, ExportJSON, ImportJSON } from "./components";
 
 type Wish = { id: string; title: string; category: string; done: boolean; due?: string; priority?: number; note?: string };
 
@@ -64,7 +64,7 @@ export default function WishlistPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-2xl font-bold">心愿单</h1>
-      <div className="mt-4 rounded-2xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg-black/20">
+      <div className="mt-4 rounded-2xl glass-card p-4">
         <div className="grid gap-3 sm:grid-cols-2 items-start">
           <div>
             <label className="block text-sm mb-1">愿望</label>
@@ -73,7 +73,7 @@ export default function WishlistPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-sm mb-1">分类</label>
-              <select value={category} onChange={e=>setCategory(e.target.value)} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2">
+              <select value={category} onChange={e=>setCategory(e.target.value)} className="w-full rounded-md nav-pill bg-transparent px-3 py-2">
                 <option>旅行</option>
                 <option>学习</option>
                 <option>生活</option>
@@ -83,7 +83,7 @@ export default function WishlistPage() {
             </div>
             <div>
               <label className="block text-sm mb-1">截止日期</label>
-              <input type="date" value={due} onChange={e=>setDue(e.target.value)} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+              <input type="date" value={due} onChange={e=>setDue(e.target.value)} className="w-full rounded-md nav-pill bg-transparent px-3 py-2" />
             </div>
             <div>
               <label className="block text-sm mb-1">优先级</label>
@@ -93,18 +93,18 @@ export default function WishlistPage() {
           </div>
           <div className="sm:col-span-2">
             <label className="block text-sm mb-1">备注（可选）</label>
-            <textarea rows={2} value={note} onChange={e=>setNote(e.target.value)} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+            <textarea rows={2} value={note} onChange={e=>setNote(e.target.value)} className="w-full rounded-md nav-pill bg-transparent px-3 py-2" />
           </div>
           <div className="sm:col-span-2">
-            <button onClick={add} className="rounded-md bg-pink-500 text-white px-4 py-2 hover:bg-pink-600">添加</button>
+            <button onClick={add} className="rounded-md btn-accent text-white px-4 py-2 hover:brightness-105">添加</button>
           </div>
         </div>
       </div>
 
       {/* Filters */}
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <input placeholder="搜索关键词" value={q} onChange={e=>setQ(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
-        <select value={filterCat} onChange={e=>setFilterCat(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2">
+        <input placeholder="搜索关键词" value={q} onChange={e=>setQ(e.target.value)} className="rounded-md nav-pill bg-transparent px-3 py-2" />
+        <select value={filterCat} onChange={e=>setFilterCat(e.target.value)} className="rounded-md nav-pill bg-transparent px-3 py-2">
           <option>全部</option>
           <option>旅行</option>
           <option>学习</option>
@@ -121,7 +121,7 @@ export default function WishlistPage() {
       <ul className="mt-6 space-y-2">
         {filtered.length === 0 && <li className="text-sm text-black/60 dark:text-white/60">没有匹配的愿望</li>}
         {filtered.map(w => (
-          <li key={w.id} className="rounded-xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg-black/20">
+          <li key={w.id} className="rounded-xl glass-card p-4">
             <div className="flex items-start justify-between gap-3">
               <label className="flex items-start gap-2">
                 <input type="checkbox" checked={w.done} onChange={()=>toggle(w.id)} />

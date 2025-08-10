@@ -130,7 +130,7 @@ export default function AnniversariesPage() {
           <h1 className="text-2xl font-bold">纪念日</h1>
           <p className="mt-2 text-sm text-black/70 dark:text-white/70">添加相识、确定关系、生日、周年等重要日子。会在首页显示最近的倒计时。</p>
 
-          <div className="mt-6 rounded-2xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg-black/20">
+          <div className="mt-6 rounded-2xl glass-card p-4">
             <div className="grid gap-3 sm:grid-cols-[1fr_200px_auto] items-end">
               <div>
                 <label className="block text-sm mb-1">名称</label>
@@ -142,8 +142,8 @@ export default function AnniversariesPage() {
               </div>
               <div className="flex gap-2 flex-wrap items-center">
                 <button onClick={addItem} className="h-10 rounded-md bg-pink-500 px-4 text-white hover:bg-pink-600">添加</button>
-                <button onClick={downloadICS} className="h-10 rounded-md border px-3">导出 ICS</button>
-                <button onClick={generateFromStart} className="h-10 rounded-md border px-3">一键生成：每月/周年</button>
+                <button onClick={downloadICS} className="h-10 rounded-md nav-pill px-3">导出 ICS</button>
+                <button onClick={generateFromStart} className="h-10 rounded-md nav-pill px-3">一键生成：每月/周年</button>
               </div>
             </div>
           </div>

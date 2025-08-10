@@ -106,15 +106,15 @@ export default function AlbumPage() {
       <p className="mt-2 text-sm text-black/70 dark:text-white/70">支持本地或云端（Vercel Blob）保存。可分组、预览、批量删除。</p>
 
       <div className="mt-4 flex flex-wrap items-center gap-3">
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-sm nav-pill px-3 py-2 rounded-md">
           <input type="checkbox" checked={useCloud} onChange={(e)=>setUseCloud(e.target.checked)} /> 云端保存
         </label>
-        <input value={albumName} onChange={(e)=>setAlbumName(e.target.value)} placeholder="相册名（可选，如：旅行/约会）" className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
-        <label className="rounded-md bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 cursor-pointer">
+        <input value={albumName} onChange={(e)=>setAlbumName(e.target.value)} placeholder="相册名（可选，如：旅行/约会）" className="rounded-md nav-pill bg-transparent px-3 py-2" />
+        <label className="rounded-md btn-accent hover:brightness-105 text-white px-4 py-2 cursor-pointer">
           选择图片
           <input type="file" accept="image/*" multiple className="hidden" onChange={(e)=>handleFiles(e.target.files)} />
         </label>
-        {selected.size>0 && <button onClick={removeSelected} className="rounded-md border px-3 py-2 text-sm">删除所选（{selected.size}）</button>}
+        {selected.size>0 && <button onClick={removeSelected} className="rounded-md nav-pill px-3 py-2 text-sm">删除所选（{selected.size}）</button>}
       </div>
 
       {grouped.length === 0 && <p className="mt-6 text-sm text-black/60 dark:text-white/60">暂无图片，点击“选择图片”开始上传</p>}
@@ -123,14 +123,14 @@ export default function AlbumPage() {
           <h2 className="mb-2 text-sm font-semibold opacity-70">{group}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {list.map((p) => (
-              <figure key={p.id} className="group relative aspect-square overflow-hidden rounded-xl border border-black/10 dark:border-white/15 bg-black/5">
+              <figure key={p.id} className="group relative aspect-square overflow-hidden rounded-xl glass-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.url} alt={p.name} className="h-full w-full object-cover" onClick={()=>setPreview(p.url)} />
-                <figcaption className="absolute bottom-0 left-0 right-0 text-xs p-2 bg-black/40 text-white opacity-0 group-hover:opacity-100 transition">{p.name}</figcaption>
+                <figcaption className="absolute bottom-0 left-0 right-0 text-xs p-2 bg-black/35 text-white opacity-0 group-hover:opacity-100 transition">{p.name}</figcaption>
                 <div className="absolute top-2 left-2 flex items-center gap-2">
                   <input type="checkbox" checked={selected.has(p.id)} onChange={()=>toggleSelect(p.id)} />
                 </div>
-                <button onClick={() => remove(p.id)} className="absolute top-2 right-2 text-xs rounded-md border px-2 py-1 bg-white/80">删除</button>
+                <button onClick={() => remove(p.id)} className="absolute top-2 right-2 text-xs rounded-md nav-pill px-2 py-1 bg-white/80">删除</button>
               </figure>
             ))}
           </div>

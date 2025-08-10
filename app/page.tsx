@@ -185,7 +185,7 @@ export default function Home() {
             我们的爱情记录
           </p>
 
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-[auto_1fr] items-center gap-3 sm:gap-4 rounded-2xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg-black/20">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-[auto_1fr] items-center gap-3 sm:gap-4 rounded-2xl glass-card p-4">
             <label className="text-sm sm:text-base font-medium">在一起的日子从：</label>
             <div className="flex items-center gap-3">
               <input
@@ -211,7 +211,7 @@ export default function Home() {
             </div>
           )}
           {/* Cover image uploader */}
-          <div className="mt-6 h-40 sm:h-56 w-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/15 grid place-items-center bg-gradient-to-br from-pink-100/70 to-white/70 dark:from-pink-900/20 dark:to-black/10 text-black/50 dark:text-white/60">
+          <div className="mt-6 h-40 sm:h-56 w-full overflow-hidden rounded-2xl glass-card grid place-items-center text-black/60 dark:text-white/70">
             {coverUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={coverUrl} alt="封面" className="h-full w-full object-cover" />
@@ -220,7 +220,7 @@ export default function Home() {
             )}
           </div>
           <div className="mt-3 flex items-center justify-center gap-3">
-            <label className="rounded-md bg-pink-500 hover:bg-pink-600 text-white px-3 py-1.5 cursor-pointer text-sm">
+            <label className="rounded-md btn-accent hover:brightness-105 px-3 py-1.5 cursor-pointer text-sm">
               上传封面
               <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
                 const f = e.target.files?.[0];
@@ -230,18 +230,18 @@ export default function Home() {
               }} />
             </label>
             {coverUrl && (
-              <button onClick={() => { setCoverUrl(""); try { localStorage.removeItem("loveCoverUrl"); } catch {} }} className="text-xs rounded-md border px-2 py-1">移除</button>
+              <button onClick={() => { setCoverUrl(""); try { localStorage.removeItem("loveCoverUrl"); } catch {} }} className="text-xs rounded-md nav-pill px-2 py-1">移除</button>
             )}
           </div>
 
           {/* Primary navigation */}
           <nav className="mt-5 grid grid-cols-3 sm:grid-cols-6 gap-2 text-sm">
-            <a href="#timeline" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">时间轴</a>
-            <Link href="/milestones" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">里程碑</Link>
-            <Link href="/album" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">相册</Link>
-            <Link href="/anniversaries" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">纪念日</Link>
-            <Link href="/wishlist" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">心愿单</Link>
-            <Link href="/guestbook" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">留言本</Link>
+            <a href="#timeline" className="rounded-lg nav-pill px-3 py-2">时间轴</a>
+            <Link href="/milestones" className="rounded-lg nav-pill px-3 py-2">里程碑</Link>
+            <Link href="/album" className="rounded-lg nav-pill px-3 py-2">相册</Link>
+            <Link href="/anniversaries" className="rounded-lg nav-pill px-3 py-2">纪念日</Link>
+            <Link href="/wishlist" className="rounded-lg nav-pill px-3 py-2">心愿单</Link>
+            <Link href="/guestbook" className="rounded-lg nav-pill px-3 py-2">留言本</Link>
           </nav>
         </header>
 
