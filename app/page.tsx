@@ -173,11 +173,11 @@ export default function Home() {
           {/* Primary navigation */}
           <nav className="mt-5 grid grid-cols-3 sm:grid-cols-6 gap-2 text-sm">
             <a href="#timeline" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">时间轴</a>
-            <a href="#milestones" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">里程碑</a>
-            <a href="#album" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">相册</a>
+            <Link href="/milestones" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">里程碑</Link>
+            <Link href="/album" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">相册</Link>
             <Link href="/anniversaries" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">纪念日</Link>
-            <a href="#wishlist" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">心愿单</a>
-            <a href="#guestbook" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">留言本</a>
+            <Link href="/wishlist" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">心愿单</Link>
+            <Link href="/guestbook" className="rounded-lg border border-black/10 dark:border-white/15 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">留言本</Link>
           </nav>
         </header>
 
