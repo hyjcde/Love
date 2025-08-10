@@ -178,10 +178,10 @@ export default function Home() {
         <>
         {/* Header / Hero */}
         <header className="mb-8 text-center love-hero rounded-3xl p-6 shadow-sm border border-black/5 dark:border-white/10">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight hand">
             逸君 ❤ 璎
           </h1>
-          <p className="mt-2 text-sm text-black/70 dark:text-white/70">
+          <p className="mt-2 text-sm text-black/70 dark:text-white/70 hand">
             我们的爱情记录
           </p>
 
