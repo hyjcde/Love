@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { buildICS } from "./ics";
+import { useEffect, useMemo, useState } from "react";
 
 type Anniv = { id: string; name: string; date: string }; // yyyy-mm-dd
 
@@ -83,6 +84,16 @@ export default function AnniversariesPage() {
     setItems((prev) => prev.filter((x) => x.id !== id));
   }
 
+  function downloadICS() {
+    const ics = buildICS(items.map(i => ({ title: i.name, date: i.date })));
+    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "anniversaries.ics";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       {!passedGate && (
@@ -105,7 +116,10 @@ export default function AnniversariesPage() {
                 <label className="block text-sm mb-1">日期</label>
                 <input type="date" value={date} onChange={(e)=>setDate(e.target.value)} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2 outline-none focus:ring-2 focus:ring-pink-400/60" />
               </div>
-              <button onClick={addItem} className="h-10 rounded-md bg-pink-500 px-4 text-white hover:bg-pink-600">添加</button>
+              <div className="flex gap-2">
+                <button onClick={addItem} className="h-10 rounded-md bg-pink-500 px-4 text-white hover:bg-pink-600">添加</button>
+                <button onClick={downloadICS} className="h-10 rounded-md border px-3">导出 ICS</button>
+              </div>
             </div>
           </div>
 

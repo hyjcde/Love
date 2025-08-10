@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
 type LoveEntry = {
   id: string;
@@ -30,6 +30,7 @@ export default function Home() {
   const [startDate, setStartDate] = useState<string>("");
   const [passedGate, setPassedGate] = useState<boolean>(false);
   const [nearestAnniv, setNearestAnniv] = useState<{ name: string; days: number } | null>(null);
+  const [coverUrl, setCoverUrl] = useState<string>("");
 
   // Form state
   const [formDate, setFormDate] = useState<string>(formatDate(new Date()));
@@ -67,6 +68,10 @@ export default function Home() {
         .map((x) => ({ name: x.name, days: daysUntil(x.date) ?? Infinity }))
         .sort((a, b) => a.days - b.days);
       if (withDays.length && isFinite(withDays[0].days)) setNearestAnniv(withDays[0]);
+    } catch {}
+    try {
+      const cu = localStorage.getItem("loveCoverUrl");
+      if (cu) setCoverUrl(cu);
     } catch {}
   }, []);
 
@@ -165,9 +170,28 @@ export default function Home() {
               <span className="text-sm">天</span>
             </div>
           )}
-          {/* Cover image placeholder */}
-          <div className="mt-6 h-40 sm:h-56 w-full rounded-2xl border border-black/10 dark:border-white/15 bg-gradient-to-br from-pink-100/70 to-white/70 dark:from-pink-900/20 dark:to-black/10 grid place-items-center text-black/50 dark:text-white/60">
-            <span>封面图/合照（后续支持上传）</span>
+          {/* Cover image uploader */}
+          <div className="mt-6 h-40 sm:h-56 w-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/15 grid place-items-center bg-gradient-to-br from-pink-100/70 to-white/70 dark:from-pink-900/20 dark:to-black/10 text-black/50 dark:text-white/60">
+            {coverUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={coverUrl} alt="封面" className="h-full w-full object-cover" />
+            ) : (
+              <span>封面图/合照（点击下方上传）</span>
+            )}
+          </div>
+          <div className="mt-3 flex items-center justify-center gap-3">
+            <label className="rounded-md bg-pink-500 hover:bg-pink-600 text-white px-3 py-1.5 cursor-pointer text-sm">
+              上传封面
+              <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
+                const f = e.target.files?.[0];
+                if (!f) return;
+                const url = await uploadCover(f);
+                if (url) { setCoverUrl(url); try { localStorage.setItem("loveCoverUrl", url); } catch {} }
+              }} />
+            </label>
+            {coverUrl && (
+              <button onClick={() => { setCoverUrl(""); try { localStorage.removeItem("loveCoverUrl"); } catch {} }} className="text-xs rounded-md border px-2 py-1">移除</button>
+            )}
           </div>
 
           {/* Primary navigation */}
@@ -265,7 +289,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="mt-12 border-t border-black/10 dark:border-white/15 pt-6 text-center text-xs text-black/60 dark:text-white/60">
           <p>
-            为 逸君 ❤ 璎 制作 · 本地存储保存数据 · 建议在浏览器中添加到主屏幕
+            从 2023-07-08 起的第 {daysTogether ?? 0} 天 · 为 逸君 ❤ 璎 制作
           </p>
         </footer>
         </>
@@ -312,4 +336,17 @@ function daysUntil(dateStr: string): number | null {
   const nextOccur = thisYear < now ? new Date(now.getFullYear() + 1, target.getMonth(), target.getDate()) : thisYear;
   const diffMs = nextOccur.setHours(0, 0, 0, 0) - now.setHours(0, 0, 0, 0);
   return Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+}
+
+async function uploadCover(file: File): Promise<string | null> {
+  try {
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch("/api/upload", { method: "POST", body: form });
+    if (!res.ok) return null;
+    const data = (await res.json()) as { url: string };
+    return data.url;
+  } catch {
+    return null;
+  }
 }
