@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { buildICS } from "./ics";
 import { useEffect, useMemo, useState } from "react";
+import { buildICS } from "./ics";
 
 type Anniv = { id: string; name: string; date: string }; // yyyy-mm-dd
 
@@ -35,6 +35,7 @@ export default function AnniversariesPage() {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [passedGate, setPassedGate] = useState<boolean>(false);
+  const [startDate, setStartDate] = useState<string>("");
 
   useEffect(() => {
     try {
@@ -55,6 +56,10 @@ export default function AnniversariesPage() {
     try {
       const g = localStorage.getItem(STORAGE_PASSED_GATE_KEY);
       setPassedGate(g === "1");
+    } catch {}
+    try {
+      const s = localStorage.getItem("loveStartDate");
+      if (s) setStartDate(s);
     } catch {}
   }, []);
 
@@ -94,6 +99,25 @@ export default function AnniversariesPage() {
     URL.revokeObjectURL(a.href);
   }
 
+  function generateFromStart() {
+    if (!startDate) return;
+    const start = new Date(startDate);
+    const toAdd: Anniv[] = [];
+    // 每月纪念：前 12 个月
+    for (let i = 1; i <= 12; i++) {
+      const d = new Date(start);
+      d.setMonth(d.getMonth() + i);
+      toAdd.push({ id: crypto.randomUUID?.() ?? `${Date.now()}-${i}`, name: `${i}个月纪念`, date: formatDate(d) });
+    }
+    // 周年纪念：前 5 年
+    for (let y = 1; y <= 5; y++) {
+      const d = new Date(start);
+      d.setFullYear(d.getFullYear() + y);
+      toAdd.push({ id: crypto.randomUUID?.() ?? `${Date.now()}-y${y}`, name: `${y}周年纪念`, date: formatDate(d) });
+    }
+    setItems(prev => [...toAdd, ...prev]);
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       {!passedGate && (
@@ -116,9 +140,10 @@ export default function AnniversariesPage() {
                 <label className="block text-sm mb-1">日期</label>
                 <input type="date" value={date} onChange={(e)=>setDate(e.target.value)} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2 outline-none focus:ring-2 focus:ring-pink-400/60" />
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap items-center">
                 <button onClick={addItem} className="h-10 rounded-md bg-pink-500 px-4 text-white hover:bg-pink-600">添加</button>
                 <button onClick={downloadICS} className="h-10 rounded-md border px-3">导出 ICS</button>
+                <button onClick={generateFromStart} className="h-10 rounded-md border px-3">一键生成：每月/周年</button>
               </div>
             </div>
           </div>

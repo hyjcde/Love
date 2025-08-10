@@ -8,6 +8,7 @@ type LoveEntry = {
   date: string; // ISO yyyy-mm-dd
   title: string;
   note: string;
+  tag?: string; // 分类标签
 };
 
 const STORAGE_ENTRIES_KEY = "loveEntries";
@@ -15,6 +16,7 @@ const STORAGE_START_DATE_KEY = "loveStartDate";
 const STORAGE_PASSED_GATE_KEY = "lovePassedGate";
 const STORAGE_ANNIV_KEY = "loveAnniversaries";
 const DEFAULT_START_DATE = "2023-07-08";
+const TAG_OPTIONS = ["纪念日", "旅行", "日常", "惊喜", "学习", "工作", "其他"] as const;
 
 function formatDate(dateLike: string | Date): string {
   const d = typeof dateLike === "string" ? new Date(dateLike) : dateLike;
@@ -36,6 +38,15 @@ export default function Home() {
   const [formDate, setFormDate] = useState<string>(formatDate(new Date()));
   const [formTitle, setFormTitle] = useState<string>("");
   const [formNote, setFormNote] = useState<string>("");
+  const [formTag, setFormTag] = useState<string>(TAG_OPTIONS[2]);
+
+  // Filters & editing
+  const [filterTag, setFilterTag] = useState<string>("全部");
+  const [filterText, setFilterText] = useState<string>("");
+  const [filterFrom, setFilterFrom] = useState<string>("");
+  const [filterTo, setFilterTo] = useState<string>("");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingDraft, setEditingDraft] = useState<LoveEntry | null>(null);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -106,15 +117,44 @@ export default function Home() {
       date: safeDate,
       title: formTitle.trim() || "未命名记录",
       note: formNote.trim(),
+      tag: formTag,
     };
     setEntries((prev) => [next, ...prev].sort((a, b) => (a.date < b.date ? 1 : -1)));
     setFormTitle("");
     setFormNote("");
+    setFormTag(TAG_OPTIONS[2]);
   }
 
   function handleDelete(id: string) {
     setEntries((prev) => prev.filter((e) => e.id !== id));
   }
+
+  function startEdit(e: LoveEntry) {
+    setEditingId(e.id);
+    setEditingDraft({ ...e });
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setEditingDraft(null);
+  }
+
+  function saveEdit() {
+    if (!editingId || !editingDraft) return;
+    setEntries((prev) => prev.map((e) => (e.id === editingId ? { ...editingDraft } : e)).sort((a, b) => (a.date < b.date ? 1 : -1)));
+    setEditingId(null);
+    setEditingDraft(null);
+  }
+
+  const filteredEntries = useMemo(() => {
+    return entries.filter((e) => {
+      if (filterTag !== "全部" && (e.tag || "") !== filterTag) return false;
+      if (filterText && !(e.title + e.note).toLowerCase().includes(filterText.toLowerCase())) return false;
+      if (filterFrom && e.date < filterFrom) return false;
+      if (filterTo && e.date > filterTo) return false;
+      return true;
+    });
+  }, [entries, filterTag, filterText, filterFrom, filterTo]);
 
   function handleCheckGate(code: string) {
     if (code === "040306") {
@@ -238,6 +278,12 @@ export default function Home() {
                 onChange={(e) => setFormNote(e.target.value)}
               />
             </div>
+            <div>
+              <label className="block text-sm mb-1">标签</label>
+              <select className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" value={formTag} onChange={(e)=>setFormTag(e.target.value)}>
+                {(["纪念日","旅行","日常","惊喜","学习","工作","其他"] as const).map(t => (<option key={t}>{t}</option>))}
+              </select>
+            </div>
             <div className="sm:col-start-2">
               <button
                 onClick={handleAdd}
@@ -252,12 +298,22 @@ export default function Home() {
         {/* Timeline */}
         <section>
           <h2 className="text-lg font-semibold mb-4">时间轴</h2>
+          {/* Filters */}
+          <div className="mb-4 grid grid-cols-1 sm:grid-cols-4 gap-2">
+            <input placeholder="搜索关键词" value={filterText} onChange={e=>setFilterText(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+            <select value={filterTag} onChange={e=>setFilterTag(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2">
+              <option>全部</option>
+              {TAG_OPTIONS.map(t => (<option key={t}>{t}</option>))}
+            </select>
+            <input type="date" value={filterFrom} onChange={e=>setFilterFrom(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+            <input type="date" value={filterTo} onChange={e=>setFilterTo(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+          </div>
 
-          {entries.length === 0 ? (
+          {filteredEntries.length === 0 ? (
             <p className="text-sm text-black/60 dark:text-white/70">还没有记录，先添加一条吧～</p>
           ) : (
             <ol className="relative border-s border-black/10 dark:border-white/15 pl-6">
-              {entries.map((e) => (
+              {filteredEntries.map((e) => (
                 <li key={e.id} className="mb-8">
                   <div className="absolute -start-[9px] mt-1 h-4 w-4 rounded-full border border-white/90 dark:border-black/90 bg-pink-500 shadow" />
                   <div className="rounded-xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg-black/20">
@@ -267,17 +323,50 @@ export default function Home() {
                           {formatDate(e.date)}
                         </p>
                         <h3 className="text-base font-semibold mt-1">{e.title}</h3>
+                        {e.tag && <span className="mt-1 inline-block text-xs rounded bg-pink-500/15 text-pink-700 dark:text-pink-300 px-2 py-0.5">{e.tag}</span>}
                       </div>
-                      <button
-                        onClick={() => handleDelete(e.id)}
-                        className="text-xs rounded-md border border-black/10 dark:border-white/20 px-2 py-1 hover:bg-black/5 dark:hover:bg-white/10"
-                        aria-label="删除记录"
-                      >
-                        删除
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => startEdit(e)}
+                          className="text-xs rounded-md border border-black/10 dark:border-white/20 px-2 py-1 hover:bg-black/5 dark:hover:bg-white/10"
+                        >编辑</button>
+                        <button
+                          onClick={() => handleDelete(e.id)}
+                          className="text-xs rounded-md border border-black/10 dark:border-white/20 px-2 py-1 hover:bg-black/5 dark:hover:bg-white/10"
+                          aria-label="删除记录"
+                        >删除</button>
+                      </div>
                     </div>
-                    {e.note && (
-                      <p className="mt-3 whitespace-pre-wrap leading-relaxed text-[15px]">{e.note}</p>
+                    {editingId === e.id && editingDraft ? (
+                      <div className="mt-3 grid gap-3 sm:grid-cols-[140px_1fr] items-start">
+                        <div className="sm:pt-2">
+                          <label className="block text-sm mb-1">日期</label>
+                          <input type="date" value={editingDraft.date} onChange={ev=>setEditingDraft({ ...editingDraft, date: ev.target.value })} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+                        </div>
+                        <div>
+                          <label className="block text-sm mb-1">标题</label>
+                          <input value={editingDraft.title} onChange={ev=>setEditingDraft({ ...editingDraft, title: ev.target.value })} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+                        </div>
+                        <div className="sm:col-span-2">
+                          <label className="block text-sm mb-1">记录/心情</label>
+                          <textarea rows={3} value={editingDraft.note} onChange={ev=>setEditingDraft({ ...editingDraft, note: ev.target.value })} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+                        </div>
+                        <div>
+                          <label className="block text-sm mb-1">标签</label>
+                          <select value={editingDraft.tag || ""} onChange={ev=>setEditingDraft({ ...editingDraft, tag: ev.target.value })} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2">
+                            <option value="">（无）</option>
+                            {TAG_OPTIONS.map(t => (<option key={t}>{t}</option>))}
+                          </select>
+                        </div>
+                        <div className="sm:col-start-2 flex gap-2">
+                          <button onClick={saveEdit} className="rounded-md bg-pink-500 px-3 py-1.5 text-white text-sm">保存</button>
+                          <button onClick={cancelEdit} className="rounded-md border px-3 py-1.5 text-sm">取消</button>
+                        </div>
+                      </div>
+                    ) : (
+                      e.note && (
+                        <p className="mt-3 whitespace-pre-wrap leading-relaxed text-[15px]">{e.note}</p>
+                      )
                     )}
                   </div>
                 </li>
