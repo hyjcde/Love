@@ -43,24 +43,24 @@ export function ImportJSON({ onImport }: { onImport: (items: Wish[]) => void }) 
 export function EditDialog({ value, onClose, onSave }: { value: Wish; onClose: () => void; onSave: (v: Wish) => void }) {
   const [draft, setDraft] = useState<Wish>({ ...value });
   return (
-    <div className="fixed inset-0 bg-black/60 grid place-items-center p-6">
-      <div className="w-full max-w-md rounded-xl border border-white/20 bg-black/80 text-white p-4">
-        <h3 className="font-semibold mb-3">编辑愿望</h3>
+    <div className="expand-overlay">
+      <div className="expand-card w-full max-w-md">
+        <h3 className="expand-title">编辑愿望</h3>
         <div className="grid gap-3">
-          <input value={draft.title} onChange={e=>setDraft({ ...draft, title: e.target.value })} className="w-full rounded-md border border-white/30 bg-transparent px-3 py-2" />
-          <select value={draft.category} onChange={e=>setDraft({ ...draft, category: e.target.value })} className="w-full rounded-md border border-white/30 bg-transparent px-3 py-2">
+          <input value={draft.title} onChange={e=>setDraft({ ...draft, title: e.target.value })} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+          <select value={draft.category} onChange={e=>setDraft({ ...draft, category: e.target.value })} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2">
             <option>旅行</option>
             <option>学习</option>
             <option>生活</option>
             <option>美食</option>
             <option>其他</option>
           </select>
-          <input type="date" value={draft.due || ""} onChange={e=>setDraft({ ...draft, due: e.target.value })} className="w-full rounded-md border border-white/30 bg-transparent px-3 py-2" />
+          <input type="date" value={draft.due || ""} onChange={e=>setDraft({ ...draft, due: e.target.value })} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
           <input type="range" min={1} max={5} value={draft.priority ?? 3} onChange={e=>setDraft({ ...draft, priority: Number(e.target.value) })} />
-          <textarea rows={3} value={draft.note || ""} onChange={e=>setDraft({ ...draft, note: e.target.value })} className="w-full rounded-md border border-white/30 bg-transparent px-3 py-2" />
+          <textarea rows={3} value={draft.note || ""} onChange={e=>setDraft({ ...draft, note: e.target.value })} className="w-full rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
           <div className="flex justify-end gap-2">
-            <button onClick={onClose} className="rounded-md border px-3 py-1.5 text-sm">取消</button>
-            <button onClick={()=>onSave(draft)} className="rounded-md bg-pink-500 px-3 py-1.5 text-sm text-white">保存</button>
+            <button onClick={onClose} className="rounded-md nav-pill px-3 py-1.5 text-sm">取消</button>
+            <button onClick={()=>onSave(draft)} className="rounded-md btn-accent px-3 py-1.5 text-sm text-white">保存</button>
           </div>
         </div>
       </div>
