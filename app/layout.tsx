@@ -50,8 +50,8 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
             try {
               var key = 'love-theme';
               var saved = localStorage.getItem(key);
-              var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-              var theme = saved || (prefersDark ? 'dark' : 'light');
+              // 默认使用浅色主题，除非用户手动切换
+              var theme = saved || 'light';
               if (theme === 'dark') document.documentElement.classList.add('dark');
               else document.documentElement.classList.remove('dark');
               window.__setTheme = function(t){

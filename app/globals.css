@@ -2,15 +2,13 @@
 
 /* Color variables */
 :root {
-  --background: #fcfcfe;
+  --background: #ffffff; /* 改回白底 */
   --foreground: #1a1a1a;
-  /* 柔和淡粉主色 */
-  --accent: #f8b4d9;
-  /* pastel pink */
-  --accent-500: #f472b6;
-  --accent-600: #db2777;
-  --card: rgba(255, 255, 255, 0.65);
-  --card-border: rgba(10, 10, 10, 0.08);
+  --accent: #ec4899; /* 更清晰的粉色主色 */
+  --accent-500: #db2777;
+  --accent-600: #be185d;
+  --card: #ffffff; /* 实心白卡片，确保可读性 */
+  --card-border: rgba(0, 0, 0, 0.12);
 }
 
 /* Dark mode override via class (in addition to prefers-color-scheme) */
@@ -44,14 +42,13 @@ body {
   color: var(--foreground);
 }
 
-.hand { font-family: var(--font-hand), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+.hand {
+  font-family: var(--font-hand), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
 
 /* Soft hero background */
 .love-hero {
-  background-image:
-    radial-gradient(1000px 500px at 10% 0%, rgba(248, 180, 217, 0.30), transparent),
-    radial-gradient(800px 400px at 90% 10%, rgba(244, 114, 182, 0.18), transparent),
-    linear-gradient(to bottom right, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.55));
+  background-image: linear-gradient(180deg, rgba(236, 72, 153, 0.10), rgba(236, 72, 153, 0.02));
 }
 
 /* 背景大气泡层 */
@@ -71,7 +68,7 @@ body::before {
 .glass-card {
   background: var(--card);
   border: 1px solid var(--card-border);
-  backdrop-filter: blur(8px);
+  backdrop-filter: none; /* 白底不再过度模糊，提高对比 */
 }
 
 /* 常用按钮风格 */
