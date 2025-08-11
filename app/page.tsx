@@ -236,12 +236,12 @@ export default function Home() {
 
           {/* Primary navigation */}
           <nav className="sticky top-2 z-20 mt-5 grid grid-cols-3 sm:grid-cols-6 gap-2 text-sm bg-transparent">
-            <a href="#timeline" className="rounded-lg nav-pill px-3 py-2">时间轴</a>
-            <Link href="/milestones" className="rounded-lg nav-pill px-3 py-2">里程碑</Link>
-            <Link href="/album" className="rounded-lg nav-pill px-3 py-2">相册</Link>
-            <Link href="/anniversaries" className="rounded-lg nav-pill px-3 py-2">纪念日</Link>
-            <Link href="/wishlist" className="rounded-lg nav-pill px-3 py-2">心愿单</Link>
-            <Link href="/guestbook" className="rounded-lg nav-pill px-3 py-2">留言本</Link>
+            <a href="#timeline" className="rounded-full nav-pill px-4 py-2">时间轴</a>
+            <Link href="/milestones" className="rounded-full nav-pill px-4 py-2">里程碑</Link>
+            <Link href="/album" className="rounded-full nav-pill px-4 py-2">相册</Link>
+            <Link href="/anniversaries" className="rounded-full nav-pill px-4 py-2">纪念日</Link>
+            <Link href="/wishlist" className="rounded-full nav-pill px-4 py-2">心愿单</Link>
+            <Link href="/guestbook" className="rounded-full nav-pill px-4 py-2">留言本</Link>
           </nav>
         </header>
 

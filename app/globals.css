@@ -73,8 +73,8 @@ body::before {
 .glass-card {
   background: var(--card);
   border: 1px solid var(--card-border);
-  backdrop-filter: none;
-  /* 白底不再过度模糊，提高对比 */
+  backdrop-filter: none; /* 白底不再过度模糊，提高对比 */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
 /* 常用按钮风格 */
@@ -90,10 +90,12 @@ body::before {
 /* 导航胶囊（更可见、更立体） */
 .nav-pill {
   border: 1px solid var(--card-border);
-  background: #ffffff; /* 固定白底，任何主题都清晰可见 */
+  background: #ffffff;
+  /* 固定白底，任何主题都清晰可见 */
   color: #1a1a1a;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   transition: background .2s ease, transform .12s ease, box-shadow .2s ease;
+  font-weight: 500;
 }
 
 .nav-pill:hover {
