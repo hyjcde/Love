@@ -2,12 +2,15 @@
 
 /* Color variables */
 :root {
-  --background: #ffffff; /* 改回白底 */
+  --background: #ffffff;
+  /* 改回白底 */
   --foreground: #1a1a1a;
-  --accent: #ec4899; /* 更清晰的粉色主色 */
-  --accent-500: #db2777;
-  --accent-600: #be185d;
-  --card: #ffffff; /* 实心白卡片，确保可读性 */
+  /* 更浅的樱花粉 */
+  --accent: #f9a8d4; /* pink-300 */
+  --accent-500: #f472b6; /* pink-400/500 for hover */
+  --accent-600: #ec4899;
+  --card: #ffffff;
+  /* 实心白卡片，确保可读性 */
   --card-border: rgba(0, 0, 0, 0.12);
 }
 
@@ -68,7 +71,8 @@ body::before {
 .glass-card {
   background: var(--card);
   border: 1px solid var(--card-border);
-  backdrop-filter: none; /* 白底不再过度模糊，提高对比 */
+  backdrop-filter: none;
+  /* 白底不再过度模糊，提高对比 */
 }
 
 /* 常用按钮风格 */
