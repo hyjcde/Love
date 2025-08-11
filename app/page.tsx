@@ -320,14 +320,15 @@ export default function Home() {
         <section>
           <h2 className="text-lg font-semibold mb-4">时间轴</h2>
           {/* Filters */}
-          <div className="mb-4 grid grid-cols-1 sm:grid-cols-4 gap-2">
-            <input placeholder="搜索关键词" value={filterText} onChange={e=>setFilterText(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
-            <select value={filterTag} onChange={e=>setFilterTag(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2">
-              <option>全部</option>
-              {TAG_OPTIONS.map(t => (<option key={t}>{t}</option>))}
-            </select>
-            <input type="date" value={filterFrom} onChange={e=>setFilterFrom(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
-            <input type="date" value={filterTo} onChange={e=>setFilterTo(e.target.value)} className="rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2" />
+          <div className="mb-4 grid grid-cols-1 sm:grid-cols-4 gap-2 items-center">
+            <input placeholder="搜索关键词" value={filterText} onChange={e=>setFilterText(e.target.value)} className="rounded-md nav-pill bg-transparent px-3 py-2" />
+            <div className="segmented">
+              {(['全部', ...TAG_OPTIONS] as const).map(t => (
+                <button key={String(t)} onClick={()=>setFilterTag(String(t))} className={filterTag===t? 'active' : ''}>{t}</button>
+              ))}
+            </div>
+            <input type="date" value={filterFrom} onChange={e=>setFilterFrom(e.target.value)} className="rounded-md nav-pill bg-transparent px-3 py-2" />
+            <input type="date" value={filterTo} onChange={e=>setFilterTo(e.target.value)} className="rounded-md nav-pill bg-transparent px-3 py-2" />
           </div>
 
           {filteredEntries.length === 0 ? (
