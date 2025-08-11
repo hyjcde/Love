@@ -25,13 +25,13 @@ html.dark {
   --card-border: rgba(255, 255, 255, 0.12);
 }
 
-/* Respect system scheme as a fallback */
-@media (prefers-color-scheme: dark) {
+/* 移除系统深色模式的自动应用，改为完全手动控制主题 */
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 /* Tailwind theme glue */
 @theme inline {
