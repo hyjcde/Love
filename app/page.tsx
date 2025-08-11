@@ -201,15 +201,22 @@ export default function Home() {
               )}
             </div>
           </div>
-          {nearestAnniv && (
-            <div className="mt-4 rounded-xl border border-black/10 dark:border-white/15 p-3 inline-flex items-center gap-2 bg-white/70 dark:bg-black/20">
-              <span className="text-sm">最近的纪念日：</span>
-              <span className="font-medium">{nearestAnniv.name}</span>
-              <span className="text-sm">还有</span>
-              <span className="font-semibold text-pink-600">{nearestAnniv.days}</span>
-              <span className="text-sm">天</span>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+            <div className="stat-card">
+              <span className="label">在一起第</span>
+              <span className="num">{daysTogether ?? 0}</span>
+              <span className="label">天</span>
             </div>
-          )}
+            {nearestAnniv && (
+              <div className="stat-card">
+                <span className="label">最近纪念日</span>
+                <span className="font-medium">{nearestAnniv.name}</span>
+                <span className="label">还有</span>
+                <span className="num">{nearestAnniv.days}</span>
+                <span className="label">天</span>
+              </div>
+            )}
+          </div>
           {/* Cover image uploader */}
           <div className="mt-6 h-40 sm:h-56 w-full overflow-hidden rounded-2xl glass-card grid place-items-center text-black/60 dark:text-white/70">
             {coverUrl ? (
@@ -236,12 +243,24 @@ export default function Home() {
 
           {/* Primary navigation */}
           <nav className="sticky top-2 z-20 mt-5 grid grid-cols-3 sm:grid-cols-6 gap-2 text-sm bg-transparent">
-            <a href="#timeline" className="rounded-full nav-pill px-4 py-2">时间轴</a>
-            <Link href="/milestones" className="rounded-full nav-pill px-4 py-2">里程碑</Link>
-            <Link href="/album" className="rounded-full nav-pill px-4 py-2">相册</Link>
-            <Link href="/anniversaries" className="rounded-full nav-pill px-4 py-2">纪念日</Link>
-            <Link href="/wishlist" className="rounded-full nav-pill px-4 py-2">心愿单</Link>
-            <Link href="/guestbook" className="rounded-full nav-pill px-4 py-2">留言本</Link>
+            <a href="#timeline" className="rounded-full nav-pill px-4 py-2 flex items-center justify-center gap-2">
+              <span>🕰️</span><span>时间轴</span>
+            </a>
+            <Link href="/milestones" className="rounded-full nav-pill px-4 py-2 flex items-center justify-center gap-2">
+              <span>📌</span><span>里程碑</span>
+            </Link>
+            <Link href="/album" className="rounded-full nav-pill px-4 py-2 flex items-center justify-center gap-2">
+              <span>🖼️</span><span>相册</span>
+            </Link>
+            <Link href="/anniversaries" className="rounded-full nav-pill px-4 py-2 flex items-center justify-center gap-2">
+              <span>📅</span><span>纪念日</span>
+            </Link>
+            <Link href="/wishlist" className="rounded-full nav-pill px-4 py-2 flex items-center justify-center gap-2">
+              <span>⭐</span><span>心愿单</span>
+            </Link>
+            <Link href="/guestbook" className="rounded-full nav-pill px-4 py-2 flex items-center justify-center gap-2">
+              <span>💌</span><span>留言本</span>
+            </Link>
           </nav>
         </header>
 

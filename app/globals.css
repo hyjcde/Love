@@ -73,7 +73,8 @@ body::before {
 .glass-card {
   background: var(--card);
   border: 1px solid var(--card-border);
-  backdrop-filter: none; /* 白底不再过度模糊，提高对比 */
+  backdrop-filter: none;
+  /* 白底不再过度模糊，提高对比 */
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
@@ -110,3 +111,22 @@ html.dark .nav-pill:hover {
 .nav-pill:active {
   transform: translateY(0.5px);
 }
+
+/* 数字强化卡片 */
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+.stat-card .num {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--accent-600);
+}
+.stat-card .label { font-size: 12px; opacity: .7; }
