@@ -59,6 +59,32 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
                 else document.documentElement.classList.remove('dark');
                 localStorage.setItem(key, t);
               };
+
+              // 字号缩放（通过根 rem 缩放）
+              var fsKey = 'love-font-scale';
+              var savedScale = parseFloat(localStorage.getItem(fsKey) || '1');
+              if (!isFinite(savedScale) || savedScale <= 0) savedScale = 1;
+              document.documentElement.style.setProperty('--font-scale', String(savedScale));
+              document.documentElement.style.fontSize = 'calc(16px * var(--font-scale))';
+              window.__setFontScale = function(scale){
+                var s = Number(scale);
+                if (!isFinite(s) || s <= 0) s = 1;
+                document.documentElement.style.setProperty('--font-scale', String(s));
+                document.documentElement.style.fontSize = 'calc(16px * var(--font-scale))';
+                localStorage.setItem(fsKey, String(s));
+              };
+
+              // 主色浅色/标准切换
+              var avKey = 'love-accent-variant';
+              var av = localStorage.getItem(avKey) || 'pastel';
+              var pastel = '#fbcfe8'; // pink-200
+              var normal = '#f9a8d4'; // pink-300
+              document.documentElement.style.setProperty('--accent', av==='pastel' ? pastel : normal);
+              window.__setAccentVariant = function(v){
+                var val = (v==='pastel') ? 'pastel' : 'normal';
+                document.documentElement.style.setProperty('--accent', val==='pastel' ? pastel : normal);
+                localStorage.setItem(avKey, val);
+              };
             } catch(e) {}
           })();
         `,

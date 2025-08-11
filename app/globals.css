@@ -54,7 +54,9 @@ body {
 }
 
 /* Soft hero background */
-.love-hero { background-image: linear-gradient(180deg, rgba(236,72,153,0.08), rgba(236,72,153,0.02)); }
+.love-hero {
+  background-image: linear-gradient(180deg, rgba(236, 72, 153, 0.08), rgba(236, 72, 153, 0.02));
+}
 
 /* 背景大气泡层 */
 body::before {
@@ -142,14 +144,21 @@ html.dark .nav-pill:hover {
   position: sticky;
   top: 8px;
   z-index: 30;
-  background: rgba(255,255,255,.9);
+  background: rgba(255, 255, 255, .9);
   border: 1px solid var(--card-border);
   border-radius: 9999px;
   backdrop-filter: blur(8px);
-  box-shadow: 0 8px 30px rgba(0,0,0,.06);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .06);
 }
 
 @keyframes pulseSoft {
-  0%, 100% { transform: translateZ(0) scale(1); }
-  50% { transform: translateZ(0) scale(1.04); }
+
+  0%,
+  100% {
+    transform: translateZ(0) scale(1);
+  }
+
+  50% {
+    transform: translateZ(0) scale(1.04);
+  }
 }

@@ -308,7 +308,7 @@ export default function Home() {
             <div className="sm:col-start-2">
               <button
                 onClick={handleAdd}
-                className="inline-flex items-center justify-center rounded-md bg-pink-500 px-4 py-2 text-white font-medium hover:bg-pink-600 active:bg-pink-700 transition-colors"
+                className="inline-flex items-center justify-center rounded-md btn-accent px-4 py-2 text-white font-medium hover:brightness-105 active:brightness-110 transition"
               >
                 记录这一天
               </button>
@@ -430,8 +430,12 @@ function Gate({ onSubmit }: { onSubmit: (code: string) => void }) {
         <button onClick={() => onSubmit(code)} className="rounded-md bg-pink-500 px-4 py-2 text-white hover:bg-pink-600">
           进入
         </button>
-        <button onClick={() => setTheme('dark')} className="text-xs rounded-md border px-2 py-1">暗色</button>
-        <button onClick={() => setTheme('light')} className="text-xs rounded-md border px-2 py-1">亮色</button>
+        <button onClick={() => setTheme('dark')} className="text-xs rounded-md nav-pill px-2 py-1">暗色</button>
+        <button onClick={() => setTheme('light')} className="text-xs rounded-md nav-pill px-2 py-1">亮色</button>
+        <button onClick={() => (window as Window & { __setFontScale?: (n: number)=>void }).__setFontScale?.(1.1)} className="text-xs rounded-md nav-pill px-2 py-1">字大</button>
+        <button onClick={() => (window as Window & { __setFontScale?: (n: number)=>void }).__setFontScale?.(1)} className="text-xs rounded-md nav-pill px-2 py-1">字普</button>
+        <button onClick={() => (window as Window & { __setAccentVariant?: (v: 'pastel'|'normal')=>void }).__setAccentVariant?.('pastel')} className="text-xs rounded-md nav-pill px-2 py-1">浅粉</button>
+        <button onClick={() => (window as Window & { __setAccentVariant?: (v: 'pastel'|'normal')=>void }).__setAccentVariant?.('normal')} className="text-xs rounded-md nav-pill px-2 py-1">标准粉</button>
       </div>
     </div>
   );
