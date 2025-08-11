@@ -47,6 +47,7 @@ export default function Home() {
   const [filterTo, setFilterTo] = useState<string>("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingDraft, setEditingDraft] = useState<LoveEntry | null>(null);
+  const [expandedEntry, setExpandedEntry] = useState<LoveEntry | null>(null);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -340,7 +341,7 @@ export default function Home() {
               {filteredEntries.map((e) => (
                 <li key={e.id} className="mb-8">
                   <div className="absolute -start-[9px] mt-1 h-4 w-4 rounded-full border border-white/90 dark:border-black/90 bg-pink-500 shadow" />
-                  <div className="rounded-xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg-black/20">
+                  <div className="rounded-xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg-black/20 cursor-pointer" onClick={()=>setExpandedEntry(e)}>
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div>
                         <p className="text-xs uppercase tracking-wide text-black/60 dark:text-white/60">
@@ -398,6 +399,19 @@ export default function Home() {
             </ol>
           )}
         </section>
+
+        {expandedEntry && (
+          <div className="expand-overlay" onClick={()=>setExpandedEntry(null)}>
+            <div className="expand-card" onClick={(ev)=>ev.stopPropagation()}>
+              <div className="expand-title">{expandedEntry.title}</div>
+              <div className="expand-date">{formatDate(expandedEntry.date)} · {expandedEntry.tag || '无标签'}</div>
+              <div className="expand-content">{expandedEntry.note || '（无内容）'}</div>
+              <div className="mt-4 text-right">
+                <button className="rounded-md nav-pill px-3 py-1 text-sm" onClick={()=>setExpandedEntry(null)}>关闭</button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Footer */}
         <footer className="mt-12 border-t border-black/10 dark:border-white/15 pt-6 text-center text-xs text-black/60 dark:text-white/60">

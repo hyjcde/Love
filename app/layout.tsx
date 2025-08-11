@@ -60,7 +60,15 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
 
               // 字号缩放（通过根 rem 缩放）
               var fsKey = 'love-font-scale';
-              var savedScale = parseFloat(localStorage.getItem(fsKey) || '1');
+              var savedRaw = localStorage.getItem(fsKey);
+              // 若用户未设置，移动端默认更大字号
+              if (savedRaw === null) {
+                var isMobile = window.matchMedia('(max-width: 768px)').matches;
+                var defaultScale = isMobile ? 1.15 : 1;
+                localStorage.setItem(fsKey, String(defaultScale));
+                savedRaw = String(defaultScale);
+              }
+              var savedScale = parseFloat(savedRaw || '1');
               if (!isFinite(savedScale) || savedScale <= 0) savedScale = 1;
               document.documentElement.style.setProperty('--font-scale', String(savedScale));
               document.documentElement.style.fontSize = 'calc(16px * var(--font-scale))';

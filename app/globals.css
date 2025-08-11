@@ -141,29 +141,77 @@ html.dark .nav-pill:hover {
 }
 
 /* Cover subtle float */
-.cover-anim { animation: coverFloat 8s ease-in-out infinite; }
+.cover-anim {
+  animation: coverFloat 8s ease-in-out infinite;
+}
+
 @keyframes coverFloat {
-  0%, 100% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(-4px); opacity: .98; }
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(-4px);
+    opacity: .98;
+  }
 }
 
 /* Command palette */
 .cmd-overlay {
-  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
-  background: rgba(0,0,0,.35); backdrop-filter: blur(4px);
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, .35);
+  backdrop-filter: blur(4px);
 }
+
 .cmd-panel {
-  width: min(680px, 92vw); border-radius: 20px; overflow: hidden;
-  background: rgba(255,255,255,.92); border: 1px solid rgba(0,0,0,.08);
-  box-shadow: 0 24px 80px rgba(0,0,0,.18);
+  width: min(680px, 92vw);
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, .92);
+  border: 1px solid rgba(0, 0, 0, .08);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .18);
 }
-.cmd-header { padding: 12px 14px; border-bottom: 1px solid rgba(0,0,0,.06); }
+
+.cmd-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
 .cmd-input {
-  width: 100%; outline: none; border: 0; background: transparent; font-size: 16px;
+  width: 100%;
+  outline: none;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
 }
-.cmd-list { max-height: 50vh; overflow: auto; }
-.cmd-item { display:flex; align-items:center; gap:10px; padding:10px 14px; }
-.cmd-item:hover { background: rgba(0,0,0,.035); }
+
+.cmd-list {
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.cmd-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+}
+
+.cmd-item:hover { background: rgba(0, 0, 0, .035); }
+
+/* Expand overlay */
+.expand-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,.35); backdrop-filter: blur(6px); display:grid; place-items:center; }
+.expand-card { width:min(720px,92vw); border-radius:20px; background: rgba(255,255,255,.96); border:1px solid rgba(0,0,0,.08); box-shadow:0 24px 80px rgba(0,0,0,.18); padding:18px; }
+.expand-title { font-weight:700; font-size:18px; margin-bottom:8px; }
+.expand-date { font-size:12px; opacity:.65; margin-bottom:10px; }
+.expand-content { white-space:pre-wrap; line-height:1.7; }
 
 /* iOS segmented control */
 .segmented {
