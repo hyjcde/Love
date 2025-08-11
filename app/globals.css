@@ -2,6 +2,7 @@
 
 /* Color variables */
 :root {
+  color-scheme: light;
   --background: #ffffff;
   /* 改回白底 */
   --foreground: #1a1a1a;
@@ -25,13 +26,6 @@ html.dark {
   --card-border: rgba(255, 255, 255, 0.12);
 }
 
-/* Respect system scheme as a fallback */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 /* Tailwind theme glue */
 @theme inline {

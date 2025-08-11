@@ -48,10 +48,13 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
             try {
               var key = 'love-theme';
               var saved = localStorage.getItem(key);
-              // 默认使用浅色主题，除非用户手动切换
+              // 迁移：强制重置为浅色，避免历史值导致黑底
+              if (saved !== 'light') {
+                localStorage.setItem(key, 'light');
+                saved = 'light';
+              }
               var theme = saved || 'light';
-              if (theme === 'dark') document.documentElement.classList.add('dark');
-              else document.documentElement.classList.remove('dark');
+              document.documentElement.classList.remove('dark');
               window.__setTheme = function(t){
                 if (t==='dark') document.documentElement.classList.add('dark');
                 else document.documentElement.classList.remove('dark');
