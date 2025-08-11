@@ -48,8 +48,12 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
             try {
               var key = 'love-theme';
               var saved = localStorage.getItem(key);
-              // 默认使用浅色主题，除非用户手动切换
+              // 新设计统一默认浅色；若之前保存过暗色，这里一次性迁移为浅色
               var theme = saved || 'light';
+              if (theme === 'dark') {
+                theme = 'light';
+                localStorage.setItem(key, 'light');
+              }
               if (theme === 'dark') document.documentElement.classList.add('dark');
               else document.documentElement.classList.remove('dark');
               window.__setTheme = function(t){
@@ -57,6 +61,7 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
                 else document.documentElement.classList.remove('dark');
                 localStorage.setItem(key, t);
               };
+
 
               // 字号缩放（通过根 rem 缩放）
               var fsKey = 'love-font-scale';
