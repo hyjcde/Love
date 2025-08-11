@@ -170,6 +170,8 @@ export default function Home() {
   return (
     <div className="min-h-dvh bg-[var(--background)] text-[var(--foreground)]">
       <div className="mx-auto max-w-3xl px-4 py-8">
+        {/* Command Palette mount */}
+        <DynamicCmdPalette />
         {/* Access Gate */}
         {!passedGate && (
           <Gate onSubmit={handleCheckGate} />
@@ -218,7 +220,7 @@ export default function Home() {
             )}
           </div>
           {/* Cover image uploader */}
-          <div className="mt-6 h-40 sm:h-56 w-full overflow-hidden rounded-2xl glass-card grid place-items-center text-black/60 dark:text-white/70">
+          <div className="mt-6 h-40 sm:h-56 w-full overflow-hidden rounded-2xl glass-card grid place-items-center text-black/60 dark:text-white/70 cover-anim">
             {coverUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={coverUrl} alt="封面" className="h-full w-full object-cover" />
@@ -408,6 +410,17 @@ export default function Home() {
       </div>
     </div>
   );
+}
+function DynamicCmdPalette() {
+  const [Comp, setComp] = useState<null | React.ComponentType>(null);
+  useEffect(() => {
+    let mounted = true;
+    import("./cmd-palette").then((m) => {
+      if (mounted) setComp(() => (m.default as unknown as React.ComponentType));
+    }).catch(()=>{});
+    return () => { mounted = false; };
+  }, []);
+  return Comp ? <Comp /> : null;
 }
 
 function Gate({ onSubmit }: { onSubmit: (code: string) => void }) {

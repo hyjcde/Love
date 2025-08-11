@@ -140,14 +140,40 @@ html.dark .nav-pill:hover {
   opacity: .7;
 }
 
+/* Cover subtle float */
+.cover-anim { animation: coverFloat 8s ease-in-out infinite; }
+@keyframes coverFloat {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(-4px); opacity: .98; }
+}
+
+/* Command palette */
+.cmd-overlay {
+  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(4px);
+}
+.cmd-panel {
+  width: min(680px, 92vw); border-radius: 20px; overflow: hidden;
+  background: rgba(255,255,255,.92); border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 24px 80px rgba(0,0,0,.18);
+}
+.cmd-header { padding: 12px 14px; border-bottom: 1px solid rgba(0,0,0,.06); }
+.cmd-input {
+  width: 100%; outline: none; border: 0; background: transparent; font-size: 16px;
+}
+.cmd-list { max-height: 50vh; overflow: auto; }
+.cmd-item { display:flex; align-items:center; gap:10px; padding:10px 14px; }
+.cmd-item:hover { background: rgba(0,0,0,.035); }
+
 /* iOS segmented control */
 .segmented {
   display: inline-flex;
   padding: 3px;
   border-radius: 9999px;
   background: #f5f5f7;
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
+
 .segmented button {
   appearance: none;
   background: transparent;
@@ -156,10 +182,11 @@ html.dark .nav-pill:hover {
   border-radius: 9999px;
   font-size: 12px;
 }
+
 .segmented button.active {
   background: var(--accent-bg, #fde7f3);
   color: #1a1a1a;
-  box-shadow: 0 1px 2px rgba(0,0,0,.06) inset;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06) inset;
 }
 
 /* 顶部导航粘顶幕布 */
