@@ -138,9 +138,9 @@ export default function AlbumPage() {
       ))}
 
       {preview && (
-        <div className="fixed inset-0 bg-black/70 grid place-items-center p-6" onClick={()=>setPreview(null)}>
+        <div className="fixed inset-0 modal-overlay grid place-items-center p-6" onClick={()=>setPreview(null)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={preview} alt="预览" className="max-h-full max-w-full rounded-lg" />
+          <img src={preview} alt="预览" className="max-h-full max-w-full modal-image" />
         </div>
       )}
     </div>

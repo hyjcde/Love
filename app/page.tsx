@@ -337,10 +337,10 @@ export default function Home() {
           {filteredEntries.length === 0 ? (
             <p className="text-sm text-black/60 dark:text-white/70">还没有记录，先添加一条吧～</p>
           ) : (
-            <ol className="relative border-s border-black/10 dark:border-white/15 pl-6">
+            <ol className="relative border-s border-black/10 dark:border-white/15 pl-6 timeline-list">
               {filteredEntries.map((e) => (
                 <li key={e.id} className="mb-8">
-                  <div className="absolute -start-[9px] mt-1 h-4 w-4 rounded-full border border-white/90 dark:border-black/90 bg-pink-500 shadow" />
+                  <div className="absolute -start-[9px] mt-1 h-4 w-4 rounded-full border border-white/90 dark:border-black/90 bg-pink-500 shadow timeline-dot" />
                   <div className="rounded-xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg-black/20 cursor-pointer" onClick={()=>setExpandedEntry(e)}>
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div>
