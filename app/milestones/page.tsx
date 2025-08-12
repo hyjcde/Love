@@ -88,10 +88,10 @@ export default function MilestonesPage() {
         </div>
       </div>
 
-      <ol className="mt-6 relative border-s border-black/10 dark:border-white/15 pl-6">
+      <ol className="mt-6 relative border-s border-black/10 dark:border-white/15 pl-6 timeline-list">
         {items.map(m => (
           <li key={m.id} className="mb-6">
-            <div className="absolute -start-[9px] mt-1 h-4 w-4 rounded-full border border-white/90 dark:border-black/90 bg-pink-500 shadow" />
+            <div className="absolute -start-[9px] mt-1 h-4 w-4 rounded-full border border-white/90 dark:border-black/90 bg-pink-500 shadow timeline-dot" />
             <div className="rounded-xl border border-black/10 dark:border-white/15 p-4 bg-white/60 dark:bg-black/20">
               <p className="text-xs uppercase tracking-wide text-black/60 dark:text-white/60">{m.date}</p>
               <h3 className="text-base font-semibold mt-1">{m.title}</h3>
